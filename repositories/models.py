@@ -7,7 +7,7 @@ from branches.models import Branches
 class Repositories(models.Model):
     name = models.CharField(max_length=255)
     stars = models.IntegerField()
-    pulse_states = JSONField()
+    pulse_stats = JSONField()
     branches = models.ManyToManyField(Branches)
     users = models.ManyToManyField(User, through='RepositorySubscriptions', related_name='repository_subscribes')
 

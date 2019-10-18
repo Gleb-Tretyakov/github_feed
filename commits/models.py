@@ -6,12 +6,11 @@ from branches.models import Branches
 
 
 class Commits(models.Model):
-    name = models.CharField(max_length=255)
     creation_date = models.DateField()
     developers = models.ManyToManyField(Developers)
     branches = models.ManyToManyField(Branches)
-    message = models.CharField(max_length=1024)
-    changed_fields = ArrayField(models.CharField(max_length=4096), blank=True)
+    message = models.CharField(max_length=4096)
+    changed_files = ArrayField(models.CharField(max_length=4096), blank=True)
     users = models.ManyToManyField(User, through='CommitUpdates', related_name='commit_updates')
 
 
