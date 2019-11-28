@@ -25,7 +25,7 @@ SECRET_KEY = '9$!+ju3=s-d#yz0uno#t!ktgl4nxtto4#z5y$(hjbfhznzu$z_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'github_feed.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
