@@ -1,5 +1,13 @@
 from django.shortcuts import render
 
 
-def feed(request):
-    return render(request, 'repositories/feed.html')
+def index(request):
+    return render(request, 'repositories/repositories.html')
+
+
+def search_repositories(request):
+    pass
+
+
+def favorite_repositories(request):
+    pass

@@ -18,10 +18,12 @@ from django.urls import path
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from profiles import views as profiles_views
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', profiles_views.home, name='home'),
+    url(r'^feed/$',  views.feed, name='feed'),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     url(r'^signup/$', profiles_views.signup, name='signup'),
     url(r'^logout/$', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
