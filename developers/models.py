@@ -8,6 +8,14 @@ class Developers(models.Model):
     users = models.ManyToManyField(User, through='DeveloperSubscriptions', related_name='developer_subscribes')
 
 
+    @classmethod
+    def get_or_none(cls, **kwargs):
+        try:
+            return cls.objects.get(**kwargs)
+        except Developers.DoesNotExist:
+            return None
+
+
 class DeveloperSubscriptions(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     developer = models.ForeignKey(Developers, on_delete=models.CASCADE)

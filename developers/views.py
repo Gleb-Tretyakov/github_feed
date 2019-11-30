@@ -7,7 +7,7 @@ def index(request):
     return render(request, 'developers/developers.html')
 
 
-def search_developers(request):
+def search_developers(r):
     form = {
         'developer_name': r.GET.get('developer_name', ''),
         'add_developer': r.GET.get('add_developer', ''),
@@ -27,7 +27,7 @@ def search_developers(request):
     return render(r, 'developers/search_developers.html', {'form': form, 'search_result': search_result})
 
 
-def favorite_developers(request):
+def favorite_developers(r):
     form = {
         'rm_developer': r.GET.get('rm_developer', ''),
     }
@@ -38,4 +38,4 @@ def favorite_developers(request):
 
     fav_developers = scripts.preferences_of_user(r.user)
 
-    return render(r, 'artists/favorite_artists.html', {'favorite_artists': fav_artists})
+    return render(r, 'developers/favorite_developers.html', {'favorite_developers': fav_developers})
