@@ -6,8 +6,8 @@ def index(request):
 
 
 def search_developers(request):
-    pass
+    return render(request, 'developers/search_developers.html')
 
 
 def favorite_developers(request):
-    pass
+    return render(request, 'developers/favorite_developers.html')

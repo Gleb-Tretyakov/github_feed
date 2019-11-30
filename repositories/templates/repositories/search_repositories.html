@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Поиск исполнителей</h1>
+  <form id="form_search_repositories" action="{% url 'repositories:search_repositories' %}" method=get>
+      <div class="form-group">
+          <label for="input_year">Введите название репозитория:</label>
+	  <input name="repository_name" id="input_repository_name" class="form-control" type="text" placeholder="Имя исполнителя" value="{{ form.repository_name }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Поиск</button>
+  </form>
+{% endblock %}

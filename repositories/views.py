@@ -6,8 +6,8 @@ def index(request):
 
 
 def search_repositories(request):
-    pass
+    return render(request, 'repositories/search_repositories.html')
 
 
 def favorite_repositories(request):
-    pass
+    return render(request, 'repositories/favorite_repositories.html')
