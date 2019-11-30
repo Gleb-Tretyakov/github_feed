@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Поиск исполнителей</h1>
+  <form id="form_search_developers" action="{% url 'developers:search_developers' %}" method=get>
+      <div class="form-group">
+          <label for="input_year">Введите имя исполнителя:</label>
+	  <input name="developer_name" id="input_developer_name" class="form-control" type="text" placeholder="Имя разработчка" value="{{ form.developer_name }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Поиск</button>
+  </form>
+{% endblock %}
