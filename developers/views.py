@@ -13,7 +13,7 @@ def search_developers(r):
         'add_developer': r.GET.get('add_developer', ''),
         'rm_developer': r.GET.get('rm_developer', ''),
     }
-    return render(request, 'developers/search_developers.html')
+    print(form)
 
     if form['add_developer']:
         scripts.add_developer_to_user(form['add_developer'], r.user)
@@ -37,7 +37,8 @@ def favorite_developers(r):
         scripts.delete_developer_from_user(form['rm_developer'], r.user)
         return redirect(reverse('developers:favorite_developers'))
 
-    fav_developers = scripts.preferences_of_user(r.user)
+    fav_developers = scripts.developer_subscriptions_of_user(r.user)
+    print(fav_developers)
 
     return render(r, 'developers/favorite_developers.html', {'favorite_developers': fav_developers})
 

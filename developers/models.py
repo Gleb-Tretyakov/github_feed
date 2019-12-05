@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 
 class Developers(models.Model):
     nickname = models.CharField(max_length=255)
-    avatar_url = models.URLField(blank=True) 
+    avatar_url = models.URLField(blank=True)
+    email = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     users = models.ManyToManyField(User, through='DeveloperSubscriptions', related_name='developer_subscribes')
-
 
     @classmethod
     def get_or_none(cls, **kwargs):

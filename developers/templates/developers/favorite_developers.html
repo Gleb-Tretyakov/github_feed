@@ -2,9 +2,10 @@
 
 {% block content %}
   <h1>Избранные разработчики</h1>
-  <table id="favorite_artist_table" class="table table-hover" style="margin-top: 20px;">
+  <table id="favorite_developers_table" class="table table-hover" style="margin-top: 20px;">
       <thead>
           <colgroup>
+              <col style="width:12%;" />
               <col style="width:12%;" />
               <col style="width:25%;" />
               <col style="width:25%;" />
@@ -12,10 +13,34 @@
           </colgroup>
           <tr>
               <th>Фото</th>
+              <th>Логин</th>
               <th>Имя</th>
-              <th>Жанры</th>
+              <th>Почта</th>
               <th>Избранное</th>
           </tr>
       </thead>
+       <tbody>
+          {% for developer in favorite_developers %}
+          <tr{% if developer.is_in_library %} style="background-color:lightgrey"{% endif %}>
+                 <td>
+                 {% if developer.avatar_url %}
+                     <img src="{{ developer.avatar_url }}" alt="{{ developer.name }}" style="width:90%; height: auto">
+                 {% endif %}
+                 </td>
+                  <td>
+                      {{ developer.nickname }}
+                  </td>
+                 <td>
+                     {{ developer.name }}
+                 </td>
+                 <td>
+                     {{ developer.email }}
+                 </td>
+                 <td>
+                     <a href="{% url 'developers:favorite_developers' %}?developer_name={{ form.developer_name }}&rm_developer={{ developer.nickname }}">удалить</a>
+                 </td>
+              </tr>
+           {% endfor %}
+       </tbody>
    </table>
 {% endblock %}
