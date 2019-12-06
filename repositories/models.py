@@ -11,7 +11,6 @@ class Repositories(models.Model):
     branches = models.ManyToManyField(Branches)
     users = models.ManyToManyField(User, through='RepositorySubscriptions', related_name='repository_subscribes')
 
-
     @classmethod
     def get_or_none(cls, **kwargs):
         try:

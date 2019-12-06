@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, redirect, reverse, redirect
+from django.shortcuts import render, redirect
 from github_client import scripts
 from django.urls import reverse
 
@@ -13,7 +13,6 @@ def search_developers(r):
         'add_developer': r.GET.get('add_developer', ''),
         'rm_developer': r.GET.get('rm_developer', ''),
     }
-    print(form)
 
     if form['add_developer']:
         scripts.add_developer_to_user(form['add_developer'], r.user)
@@ -38,7 +37,6 @@ def favorite_developers(r):
         return redirect(reverse('developers:favorite_developers'))
 
     fav_developers = scripts.developer_subscriptions_of_user(r.user)
-    print(fav_developers)
 
     return render(r, 'developers/favorite_developers.html', {'favorite_developers': fav_developers})
 

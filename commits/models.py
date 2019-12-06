@@ -3,11 +3,13 @@ from django.contrib.auth.models import User
 from developers.models import Developers
 from django.contrib.postgres.fields import ArrayField
 from branches.models import Branches
+from repositories.models import Repositories
 
 
 class Commits(models.Model):
     creation_date = models.DateField()
     developers = models.ManyToManyField(Developers)
+    repository = models.ManyToManyField(Repositories)
     branches = models.ManyToManyField(Branches)
     message = models.CharField(max_length=4096)
     changed_files = ArrayField(models.CharField(max_length=4096), blank=True)
