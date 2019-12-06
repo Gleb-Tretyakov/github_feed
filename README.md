@@ -10,4 +10,6 @@ To run app from project dir:
 
 ```sudo psql -U $USER -d postgres -f init.sql```
 
+```./manage.py migrate```
+
 ```./manage.py runserver```
