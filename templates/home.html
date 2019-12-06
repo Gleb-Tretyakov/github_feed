@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Привет, {{ user.get_full_name }} <small>({{ user.username }})</small>!</h1>
+  <h1>Привет, {{ user.username }}!</h1>
   <br>
-  <h4>Выберите раздел:</h4>
+  <h4>Выбери раздел:</h4>
       <ul>
           <li>
-              <a href="{% url 'developers:index' %}">Исполнители</a>
+              <a href="{% url 'developers:index' %}">Разработчики</a>
           </li>
           <li>
-	      <a href="{% url 'feed' %}">Лента</a>
+              <a href="{% url 'repositories:index' %}">Репозитории</a>
+          </li>
+          <li>
+              <a href="{% url 'feed' %}">Лента</a>
           </li>
        </ul>
 {% endblock %}

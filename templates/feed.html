@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Feed</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h1>Лента коммитов</h1>
+  <table id="feed_table" class="table table-hover" style="margin-top: 20px;">
+      <thead>
+          <colgroup>
+              <col style="width:27%;" />
+              <col style="width:17%;" />
+              <col style="width:12%;" />
+              <col style="width:12%;" />
+              <col style="width:17%;" />
+          </colgroup>
+          <tr>
+              <th>Измененные файлы</th>
+              <th>Сообщение</th>
+              <th>Разработчики</th>
+              <th>Дата создания</th>
+              <th>Ссылка на коммит</th>
+          </tr>
+      </thead>
+      <tbody>
+           {% for commit in commits %}
+              <tr{% if commit.status %} style="background-color:lightgrey"{% endif %}>
+                 <td>
+                     {{ commit.changed_files|join:",<br>" }}
+                 </td>
+                 <td>
+                     {{ commit.message }}
+                 </td>
+                 <td>
+                     {{ commit.developer_names }}
+                 </td>
+                   <td>
+                       {{ commit.creation_date }}
+                   </td>
+                 <td>
+                     <a href ="{{ commit.commit_url }}">{{commit.commit_url}}</a>
+                 </td>
+              </tr>
+           {% endfor %}
+       </tbody>
+   </table>
+{% endblock %}

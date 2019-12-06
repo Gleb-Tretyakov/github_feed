@@ -11,6 +11,13 @@ class Repositories(models.Model):
     branches = models.ManyToManyField(Branches)
     users = models.ManyToManyField(User, through='RepositorySubscriptions', related_name='repository_subscribes')
 
+    @classmethod
+    def get_or_none(cls, **kwargs):
+        try:
+            return cls.objects.get(**kwargs)
+        except Repositories.DoesNotExist:
+            return None
+
 
 class RepositorySubscriptions(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
