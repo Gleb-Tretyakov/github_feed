@@ -1,4 +1,5 @@
 import json
+import datetime
 from github import Github
 from developers.models import Developers, DeveloperSubscriptions
 from repositories.models import Repositories, RepositorySubscriptions
@@ -76,7 +77,7 @@ def get_developer_commits(nickname):
 
 def get_repository_commits(repo_name):
     repo_obj = get_default_client().get_repo(repo_name)
-    commits = sorted(repo_obj.get_commits(), key=lambda c: c.commit.committer.date)
+    commits = sorted(repo_obj.get_commits(since=datetime.datetime.now()-datetime.timedelta(days=90)), key=lambda c: c.commit.committer.date)
     commits.reverse()
     return commits[:COMMITS_LIMIT]
 
@@ -92,7 +93,6 @@ def add_developers_to_commits(commit_obj, developers):
 def add_commits_to_updates(user, commits, developer=None, repository=None):
     for commit in commits:
         commit_obj = Commits.get_or_none(github_id=commit.html_url)
-        print(commit.commit.committer.date)
         if commit_obj is None:
             commit_obj = Commits.objects.create(
                 message=commit.commit.message,
@@ -189,15 +189,15 @@ def repository_subscriptions_of_user(user):
             'repository__name',
             'repository__stars',
             'repository__pulse_stats',
-            'repository__branches__name'
         )
         answer = []
         for repository in repositories:
+            rr = Repositories.objects.get(name=repository['repository__name'])
             answer.append({
                 'name': repository['repository__name'],
                 'stars': repository['repository__stars'],
                 'pulse_stats': repository['repository__pulse_stats'],
-                'branches': repository['repository__branches__name']
+                'branches': [item['name'] for item in rr.branches.all().values()]
             })
         return answer
     except Exception as e:
@@ -217,6 +217,13 @@ def get_or_create_developer(nickname):
     )
 
 
+def get_or_create_branch(name):
+    br = Branches.get_or_none(name=name)
+    if br:
+        return br
+    return Branches.objects.create(name=name)
+
+
 def get_or_create_repository(name):
     info = get_repository_info_by_name(name)
     repo = Repositories.get_or_none(name=name)
@@ -228,7 +235,8 @@ def get_or_create_repository(name):
         pulse_stats=info["pulse_stats"],
     )
     for branch in info["branches"]:
-        repository.branches.add(Branches.objects.get_or_create(branch))
+        obj = get_or_create_branch(branch)
+        repository.branches.add(obj)
     return repository
 
 
@@ -258,7 +266,6 @@ def search_repository(user, query):
     resp = get_default_client().search_repositories(query.strip(), sort="stars", **qualifiers)
     answer = []
     for obj in resp:
-        print(obj.full_name)
         is_in_library = False
         repo = Repositories.get_or_none(name=obj.full_name)
         if repo and repo in user.repository_subscribes.filter(repositorysubscriptions__status=True):

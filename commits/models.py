@@ -11,7 +11,7 @@ class Commits(models.Model):
     developers = models.ManyToManyField(Developers)
     repository = models.ManyToManyField(Repositories)
     branches = models.ManyToManyField(Branches)
-    message = models.CharField(max_length=4096)
+    message = models.CharField(max_length=8192)
     changed_files = ArrayField(models.CharField(max_length=4096), blank=True)
     users = models.ManyToManyField(User, through='CommitUpdates', related_name='commit_updates')
     github_id = models.CharField(max_length=1024)
