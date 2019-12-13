@@ -50,7 +50,7 @@ def repo_info(repo_obj, is_in_library=False):
         "name": repo_obj.full_name,
         "stars": repo_obj.get_stargazers().totalCount,
         "pulse_stats": stats_info(repo_obj),
-        "branches": [branch.name for branch in repo_obj.get_branches()[:5]],
+        "branches": [branch.name for branch in repo_obj.get_branches()[:5]] if repo_obj.get_branches().totalCount else ["master"],
         "is_in_library": is_in_library
     }
 
@@ -171,7 +171,6 @@ def developer_subscriptions_of_user(user):
             'developer__name'
         )
         answer = []
-        print(developers)
         for developer in developers:
             answer.append({
                 'nickname': developer['developer__nickname'],
@@ -192,7 +191,6 @@ def repository_subscriptions_of_user(user):
             'repository__pulse_stats',
             'repository__branches__name'
         )
-        print(repositories)
         answer = []
         for repository in repositories:
             answer.append({
@@ -219,13 +217,6 @@ def get_or_create_developer(nickname):
     )
 
 
-def get_or_create_branch(name):
-    br = Branches.get_or_none(name=name)
-    if br:
-        return br
-    return Branches.objects.create(name=name)
-
-
 def get_or_create_repository(name):
     info = get_repository_info_by_name(name)
     repo = Repositories.get_or_none(name=name)
@@ -237,7 +228,7 @@ def get_or_create_repository(name):
         pulse_stats=info["pulse_stats"],
     )
     for branch in info["branches"]:
-        repository.branches.add(get_or_create_branch(branch))
+        repository.branches.add(Branches.objects.get_or_create(branch))
     return repository
 
 
