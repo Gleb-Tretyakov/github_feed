@@ -6,6 +6,13 @@ class Branches(models.Model):
     name = models.CharField(max_length=255)
     users = models.ManyToManyField(User, through='BranchUpdates', related_name='branch_updates')
 
+    @classmethod
+    def get_or_none(cls, **kwargs):
+        try:
+            return cls.objects.get(**kwargs)
+        except Branches.DoesNotExist:
+            return None
+
 
 class BranchUpdates(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -219,6 +219,13 @@ def get_or_create_developer(nickname):
     )
 
 
+def get_or_create_branch(name):
+    br = Branches.get_or_none(name=name)
+    if br:
+        return br
+    return Branches.objects.create(name=name)
+
+
 def get_or_create_repository(name):
     info = get_repository_info_by_name(name)
     repo = Repositories.get_or_none(name=name)
@@ -230,7 +237,7 @@ def get_or_create_repository(name):
         pulse_stats=info["pulse_stats"],
     )
     for branch in info["branches"]:
-        repository.branches.add(Branches.objects.get_or_create(branch))
+        repository.branches.add(get_or_create_branch(branch))
     return repository
 
 
