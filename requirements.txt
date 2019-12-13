@@ -1,4 +1,4 @@
-django
+django==2.2.6
 wheel
 psycopg2
 django-bootstrap-static
