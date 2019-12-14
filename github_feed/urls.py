@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', profiles_views.home, name='home'),
     url(r'^feed/',  views.feed, name='feed'),
+    url(r'^statistics/',  views.statistics, name='statistics'),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     url(r'^signup/$', profiles_views.signup, name='signup'),
     url(r'^logout/$', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
